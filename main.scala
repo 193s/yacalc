@@ -1,18 +1,22 @@
 import scala.util.parsing.combinator._
 
-val tests = List (
-  "1, 0xcafe, 0b1010, -10",
-  "0xcafebabe + 0xdeadbeef",
-  "2 - (10)",
-  "1 + -2",
-  "1 + 2 + 3 + 4",
-  "1 - 1",
-  "1 - (2 * 3) + 1",
-  "0"
-)
-tests.foreach(test)
+// test
+Testing.testAll()
 
-def test(str: String): Unit =
+object Testing {
+  val tests = List (
+    "1, 0xcafe, 0b1010, -10",
+    "0xcafebabe + 0xdeadbeef",
+    "2 - (10)",
+    "1 + -2",
+    "1 + 2 + 3 + 4",
+    "1 - 1",
+    "1 - (2 * 3) + 1",
+    "0"
+  )
+  def testAll(): Unit = tests.foreach(test)
+
+  def test(str: String): Unit =
   YACalc(str) match {
     case Some(result) =>
       import scala.io.AnsiColor._
@@ -22,6 +26,7 @@ def test(str: String): Unit =
       import scala.io.AnsiColor._
       println(s"$RED$str$RESET: failed")
   }
+}
 
 object YACalc extends RegexParsers {
   type T = Parser[BigInt]
